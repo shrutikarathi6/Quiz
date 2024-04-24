@@ -324,6 +324,17 @@ CREATE TABLE `user` (
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- hfhfjjhfgvhfhgh?
+CREATE TABLE quiz_start_times (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id VARCHAR(100),
+    student_name VARCHAR(100),
+    quiz_id INT,
+    start_time DATETIME
+);
+
+
 --
 -- Dumping data for table `user`
 --

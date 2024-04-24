@@ -256,7 +256,7 @@
         <!-- feedback reading portion closed -->
         <!-- add quiz start -->
         <?php if(@$_GET['q']==4 && !(@$_GET['step'])) { ?>
-          <div class="row">
+          <div class="row quizmaker">
             <span class="title1" style="margin-left:40%;font-size:30px;"><b></b></span><br /><br />
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -309,7 +309,7 @@
                   <div class="form-group">
                     <label class="col-md-12 control-label" for="desc"></label>
                     <div class="col-md-12">
-                      <textarea rows="8" cols="8" name="desc" class="form-control" placeholder="Write description here..."></textarea>
+                      <textarea rows="6" cols="6" style="resizable:none" name="desc" class="form-control" placeholder="Write description here..."></textarea>
                     </div>
                   </div>
                   <div class="form-group">

@@ -12,11 +12,13 @@ background-attachment:fixed;
 /* min-height:540px;
  */
  height: 100%;
+ overflow-y: hidden;
 }
 .bg1
 {
     background-color: rgb(207, 216, 225);
     height:90vh;
+    overflow-y: hidden;
 }
 
 @font-face {
@@ -311,5 +313,15 @@ text-decoration:none;
 .feedbackcontainer h2{
   text-align: center;
   margin-bottom: 30px;
+}
+/* .quizmaker{ */
+  /* background-color: red; */
+/* } */
+
+.newquiz{
+  min-height: auto;
+  height: 80vh;
+  overflow-y: hidden;
+  margin-bottom: 100px;
 }
 

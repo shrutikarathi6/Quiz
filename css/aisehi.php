@@ -72,47 +72,30 @@
                 <div class="row">
                     <div class="col-md-12">
                         <!--home start-->
-                        <?php
-                            if (@$_GET['q'] == 1) {
-                                $result = mysqli_query($con, "SELECT * FROM quiz ORDER BY date DESC") or die('Error');
-                                echo  '<div class="panel" style="margin-top:10vh "><div class="table-responsive"><table class="table table-striped title1">
-                                <tr><td><b>S.N.</b></td><td><b>Topic</b></td><td><b>Total question</b></td><td><b>Marks</b></td><td><b>Time limit</b></td><td></td></tr>';
-                                $c = 1;
-                                while ($row = mysqli_fetch_array($result)) {
-                                    $title = $row['title'];
-                                    $total = $row['total'];
-                                    $sahi = $row['sahi'];
-                                    $time = $row['time'];
-                                    $eid = $row['eid'];
-                                    $q12 = mysqli_query($con, "SELECT score FROM history WHERE eid='$eid' AND email='$email'") or die('Error98');
-                                    $rowcount = mysqli_num_rows($q12);
-
-                                    if ($rowcount == 0) {
-                                        // Check if entry already exists in quiz_start_times table
-                                        $existing_entry_query = mysqli_query($con, "SELECT * FROM quiz_start_times WHERE student_id='$email' AND quiz_id='$eid'");
-                                        $existing_entry_count = mysqli_num_rows($existing_entry_query);
-
-                                        if ($existing_entry_count == 0) { // If entry doesn't exist, insert it
-                                            $student_id = $_SESSION['email']; // Assuming email is the student ID
-                                            $student_name = $_SESSION['name'];
-                                            // Insert record into quiz_start_times table
-                                            mysqli_query($con, "INSERT INTO quiz_start_times (student_id, student_name, quiz_id, start_time) VALUES ('$student_id', '$student_name', '$eid', CURTIME())");
-                                        }
-
-                                        echo '<tr><td>' . $c++ . '</td><td>' . $title . '</td><td>' . $total . '</td><td>' . $sahi * $total . '</td><td>' . $time . '&nbsp;min</td>
-                                        <td><b><a href="account.php?q=quiz&step=2&eid=' . $eid . '&n=1&t=' . $total . '" class="pull-right btn sub1" style="margin:0px;background:#99cc32"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Start</b></span></a></b></td></tr>';
-                                    } else {
-                                        echo '<tr style="color:#99cc32"><td>' . $c++ . '</td><td>' . $title . '&nbsp;<span title="This quiz is already solved by you" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td><td>' . $total . '</td><td>' . $sahi * $total . '</td><td>' . $time . '&nbsp;min</td>
-                                        <td><b><a href="update.php?q=quizre&step=25&eid=' . $eid . '&n=1&t=' . $total . '" class="pull-right btn sub1" style="margin:0px;background:red"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Restart</b></span></a></b></td></tr>';
-                                    }
+                        <?php if (@$_GET['q'] == 1) {
+                            $result = mysqli_query($con, "SELECT * FROM quiz ORDER BY date DESC") or die('Error');
+                            echo  '<div class="panel" style="margin-top:10vh "><div class="table-responsive"><table class="table table-striped title1">
+                        <tr><td><b>S.N.</b></td><td><b>Topic</b></td><td><b>Total question</b></td><td><b>Marks</b></td><td><b>Time limit</b></td><td></td></tr>';
+                            $c = 1;
+                            while ($row = mysqli_fetch_array($result)) {
+                                $title = $row['title'];
+                                $total = $row['total'];
+                                $sahi = $row['sahi'];
+                                $time = $row['time'];
+                                $eid = $row['eid'];
+                                $q12 = mysqli_query($con, "SELECT score FROM history WHERE eid='$eid' AND email='$email'") or die('Error98');
+                                $rowcount = mysqli_num_rows($q12);
+                                if ($rowcount == 0) {
+                                    echo '<tr><td>' . $c++ . '</td><td>' . $title . '</td><td>' . $total . '</td><td>' . $sahi * $total . '</td><td>' . $time . '&nbsp;min</td>
+                                <td><b><a href="account.php?q=quiz&step=2&eid=' . $eid . '&n=1&t=' . $total . '" class="pull-right btn sub1" style="margin:0px;background:#99cc32"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Start</b></span></a></b></td></tr>';
+                                } else {
+                                    echo '<tr style="color:#99cc32"><td>' . $c++ . '</td><td>' . $title . '&nbsp;<span title="This quiz is already solve by you" class="glyphicon glyphicon-ok" aria-hidden="true"></span></td><td>' . $total . '</td><td>' . $sahi * $total . '</td><td>' . $time . '&nbsp;min</td>
+                                <td><b><a href="update.php?q=quizre&step=25&eid=' . $eid . '&n=1&t=' . $total . '" class="pull-right btn sub1" style="margin:0px;background:red"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Restart</b></span></a></b></td></tr>';
                                 }
-                                $c = 0;
-                                echo '</table></div></div>';
                             }
-                            ?>
-
-
-
+                            $c = 0;
+                            echo '</table></div></div>';
+                        } ?>
 
                         <?php
                         if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2) {
@@ -120,7 +103,6 @@
                             $sn = @$_GET['n'];
                             $total = @$_GET['t'];
                             $q = mysqli_query($con, "SELECT * FROM questions WHERE eid='$eid' AND sn='$sn' ");
-
                             echo '<div class="panel" style="margin:5%">';
                             while ($row = mysqli_fetch_array($q)) {
                                 $qns = $row['qns'];
@@ -137,9 +119,6 @@
                             }
                             echo '<br /><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;Submit</button></form></div>';
                             //header("location:dash.php?q=4&step=2&eid=$id&n=$total");
-
-
-
                         }
                         //result display
                         if (@$_GET['q'] == 'result' && @$_GET['eid']) {
